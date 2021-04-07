@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\sessionController;
 use App\Http\Controllers\postController;
+use App\Http\Controllers\paginationController;
+use App\Http\Controllers\uploadController;
+use App\Http\Controllers\mailController;
+
 
 
 
@@ -18,9 +22,30 @@ use App\Http\Controllers\postController;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/{locale}', function ($locale) {
+//     App::setLocale($locale);
+//     return view('welcome');
+// });
+
+Route::get('/', function() {
+   
     return view('welcome');
 });
+
+Route::get('/home', function () {
+    return view('home');
+});
+
+Route::get('/contact-us', function () {
+    return view('contact-us');
+});
+
+Route::get('/about-us', function () {
+    return view('About-us');
+});
+
+Route::get('/users',[paginationController::class,'allusers']) ->name('user.allusers');
+
 
 Route::get('/login',[LoginController::class,'index']) ->name('login.index');
 
@@ -40,7 +65,18 @@ Route::get('/post/{id}',[postController::class,'getPostById'])->name('post.view'
 
 Route::get('/post-delete/{id}',[postController::class,'deletePost'])->name('post.delete');
 
-Route::get('/post-edit/{id}',[postController::class,'updatePost'])->name('post.edit');
+Route::get('/post-edit/{id}',[postController::class,'editPost'])->name('post.edit');
 
+Route::post('/update-post',[postController::class,'updatePost'])->name('post.update');
 
+Route::get('/inner-join',[postController::class,'innerJoinCaluse'])->name('inner.join');
+Route::get('/left-join',[postController::class,'leftJoinCaluse'])->name('left.join');
+Route::get('/right-join',[postController::class,'rightJoinCaluse'])->name('right.join');
 
+Route::get('/getAllPost',[postController::class,'getAllPostUsingModel'])->name('post.getAllPost');
+
+Route::get('/upload',[uploadController::class,'uploadForm']);
+
+Route::post('/upload',[uploadController::class,'uploadfile'])->name('upload.file');
+
+Route::get('/send-email',[mailController::class,'sendmail']);

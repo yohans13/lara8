@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\DB;
+use App\Models\Post;
 
 
 class postController extends Controller
@@ -52,7 +53,47 @@ class postController extends Controller
         return back()->with('post_delected','post has been deleted succesfully');
     }
 
-    public function updatePost($id){
-                return view('');
+    public function editPost($id){
+        $post=DB::table('post')->where('id',$id)->first();
+                return view('edit-post',compact('post'));
+    }
+
+    public function updatePost(Request $req)
+    {
+        DB::table('post')->where('id',$req->id)->update([
+            'title'=>$req->title,
+            'body'=>$req->body
+        ]);
+        return back()->with('post updated',"post has been update");
+    }
+
+    public function innerJoinCaluse(){
+        $req=DB::table('users')
+            ->join('post','users.id','=','post.user_id')
+            ->select('users.name','post.title','post.body')
+            ->get();
+            return $req;
+    }
+
+    public function leftJoinCaluse(){
+        $req=DB::table('users')
+            ->leftJoin('post','users.id','=','post.user_id')
+           
+            ->get();
+            return $req;
+    }
+
+    public function rightJoinCaluse(){
+        $req=DB::table('users')
+            ->rightJoin('post','users.id','=','post.user_id')
+           
+            ->get();
+            return $req;
+    }
+
+    public function getAllPostUsingModel(){
+
+        $posts=Post::all();
+        return $posts;
     }
 }

@@ -1,24 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Post</title>
-  
-     <!-- Font Awesome if you need it-->
-     <link
-      href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"/>
-    <!--Replace with your tailwind.css once created-->
-    <link
-      href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css"
-      rel="stylesheet"
-    />
-    <!--Tailwind Custom Forms - use to standardise form fields - https://github.com/tailwindcss/custom-forms-->
+@extends('layouts.master')
+@section('title','All posts')
+@section('content')
+
+ 
 
 
-</head>
-<body>
+
 
 @if(Session::has('post_delected'))
 
@@ -63,9 +50,10 @@
           {{$posts->body}}
           </dd>
 <div class="mt-8">
- <a href="post/{{$posts->id}}" class="bg-transparent   text-blue-700 font-semibold  py-2 px-4  w-20">View</a>
- <a href="post-edit/{{$posts->id}}" class="bg-transparent   text-green-500 font-semibold  py-2 px-4  w-20">Edit</a>
-        <a href="post-delete/{{$posts->id}}" class="bg-transparent   text-red-700 font-semibold  py-2 px-4  w-20">Delete</a>
+        <a href="/post/{{$posts->id}}" class="bg-transparent   text-blue-700 font-semibold  py-2 px-4  w-20">View</a>
+        <a href="/post-edit/{{$posts->id}}" class="bg-transparent   text-green-500 font-semibold  py-2 px-4  w-20">Edit</a>
+
+        <a href="/post-delete/{{$posts->id}}" class="bg-transparent   text-red-700 font-semibold  py-2 px-4  w-20">Delete</a>
 
         </div>
 
@@ -78,6 +66,4 @@
   </div>
 </div>
 
-  
-</body>
-</html>
+@endsection
